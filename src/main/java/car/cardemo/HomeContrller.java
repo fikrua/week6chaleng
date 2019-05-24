@@ -1,5 +1,6 @@
 package car.cardemo;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,10 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Map;
 
 @Controller
 public class HomeContrller {
     @Autowired CarRepository carRepository;
+    @Autowired CloudinaryConfig cloudc;
 
     @Autowired CatagoryRepository catagoryRepository;
 
@@ -22,18 +26,32 @@ public class HomeContrller {
 
     }
     @GetMapping("/add")
-    public String courseForm(Model model){
+    public String carForm(Model model){
         model.addAttribute("car",new Car());
         return "carform";
     }
     @PostMapping("/process")
 
-    public String processForm(@Valid Car car, BindingResult result){
-        if(result.hasErrors()){
-            return "carform";
-        }
+    public String processActor(@ModelAttribute Car car, @RequestParam("file") MultipartFile file){
+
         carRepository.save(car);
-        return "redirect:/";
+
+
+            if(file.isEmpty()){
+                return "redirect:/add";
+                }
+            try{
+                Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcetype","auto"));
+                car.setHeadshot(uploadResult.get("url").toString());
+                carRepository.save(car);
+            }catch (IOException e){
+                e.printStackTrace();
+                return "redirect:/add";
+            }
+
+            return "redirect:/";
+
+
     }
 
     @RequestMapping("/detail/{id}")
@@ -56,15 +74,17 @@ public class HomeContrller {
 
 
 
+
     @RequestMapping("/home")
     public String listcategory(Model model){
-        model.addAttribute("category",catagoryRepository.findAll());
+        model.addAttribute("categorys",catagoryRepository.findAll());
         return "lists";
 
     }
     @GetMapping("/addcategory")
     public String categoryForm(Model model){
         model.addAttribute("category",new Catagory());
+
         return "categoryform";
     }
     @PostMapping("/process's")
@@ -77,16 +97,8 @@ public class HomeContrller {
         return "redirect:/home";
     }
 
-    @PostMapping("/add")
 
-    public String processActor(@ModelAttribute Car car, @RequestParam("file") MultipartFile file) {
 
-        if (file.isEmpty()) {
 
-            return "redirect:/add";
 
-        }
-        return "redirect:/";
-
-    }
 }

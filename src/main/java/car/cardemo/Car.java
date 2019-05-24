@@ -1,9 +1,6 @@
 package car.cardemo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Car {
@@ -14,7 +11,7 @@ public class Car {
     private String model;
     private int year;
     private double msrm;
-    private int catagoryid;
+    private String catagory;
     private String headshot;
 
     public String getHeadshot() {
@@ -65,11 +62,11 @@ public class Car {
         this.msrm = msrm;
     }
 
-    public int getCatagoryid() {
-        return catagoryid;
+    public String getCatagoryid() {
+        return catagory;
     }
 
-    public void setCatagoryid(int catagoryid) {
-        this.catagoryid = catagoryid;
+    public void setCatagoryid(String catagory) {
+        this.catagory = catagory;
     }
 }

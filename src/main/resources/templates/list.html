@@ -12,7 +12,7 @@
 <div class="container">
     <div class="card" >
         <div class="card-header text-center bg-dark text-white">
-            <h1> fikrus car dealer</h1>
+            <h1> car dealer</h1>
         </div>
 <div th:each="car:${cars}">
     <div class="row ">
@@ -22,11 +22,16 @@
 
             <h3 th:inline="text"> [[${car.manufacturer}]]  [[${car.model}]]</h3>
             </div>
+                <div th:if="${car.headshot} != null">
+
+                    <img th:src="${car.headshot}"/>
+                </div>
             <a th:href="@{/detail/{id}(id=${car.id})}"><h5> More INFO</h5></a>
             </div>
         </div>
     </div>
 </div>
+
         <div class="card-footer text-center bg-dark text-white">
 
             <p>Posted by: Fikru Melese</p>

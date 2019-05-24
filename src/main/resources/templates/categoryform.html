@@ -7,19 +7,19 @@
 </head>
 <body>
 <div class="container">
-    <p><a href="/add"> <b>add car</b></a> <a href="/addcategory"> <b>Add Category</b></a> <a href="/"> <b>LIST of car</b></a></p>
+    <p><a href="/add"> <b>add car</b></a> <a href="/addcategory"> <b>Add Category</b></a> <a href="/"> <b>List of car</b></a></p>
 </div>
 <div class="container">
     <div class="card" >
         <div class="card-header text-center bg-dark text-white">
-            <h1> fikrus car dealer</h1>
+            <h1> car dealer</h1>
         </div>
-<form action="#" th:action="@{/add}" th:object="${category}" method="get">
-<input type="hidden" th:field="*{id}"/>
- Category<br/><input type="text" th:field="*{category}"/><br/>
+        <form action="#" th:action="@{/add}" th:object="${category}" method="get">
+            <input type="hidden" th:field="*{id}"/>
+            Category<br/><input type="text" th:field="*{category}"/><br/>
 
-<input type="submit" value="Submit"/>
-</form>
+            <input type="submit" value="Submit"/>
+        </form>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
